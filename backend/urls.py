@@ -25,6 +25,6 @@ router.register('posts', PostViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls)),
-    path('', TemplateView.as_view(template_name='blog/index.html'))
+    path('', TemplateView.as_view(template_name='blog/index.html')),
+    path('', include(router.urls)),
 ]
