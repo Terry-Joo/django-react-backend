@@ -20,10 +20,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '(y&&%*irla98i7dr9h3029bil0iy5)!shiha#idlk1n-v+=p6^'
+SECRET_KEY = os.environ.get('APP_SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = {'backend.settings.local': lambda: True}.get(os.environ.get('DJANGO_SETTINGS_MODULE'), lambda: False)()
 
 ALLOWED_HOSTS = []
 
@@ -62,13 +62,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'backend.urls'
 
-WEBPACK_LOADER = {
-    'DEFAULT': {
-        'BUNDLE_DIR_NAME': 'bundles/',
-        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.prod.json' if not DEBUG else 'webpack-stats.dev.json'),
-    }
-}
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -93,15 +86,6 @@ STATICFILES_DIRS = (
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -151,7 +135,3 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
 }
-
-CORS_ORIGIN_WHITELIST = (
-    'http://localhost:3000',
-)
