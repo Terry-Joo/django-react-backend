@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('APP_SECRET')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = {'backend.settings.local': lambda: True}.get(os.environ.get('DJANGO_SETTINGS_MODULE'), lambda: False)()
+DEBUG = {'backend.settings.local': True}.get(os.environ.get('DJANGO_SETTINGS_MODULE'), False)
 
 ALLOWED_HOSTS = []
 
