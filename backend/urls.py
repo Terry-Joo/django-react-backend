@@ -21,13 +21,12 @@ from django.views.generic import TemplateView
 from rest_framework import routers
 
 from backend.settings import base
-from blog.serializers import PostViewSet
 
 router = routers.DefaultRouter()
-router.register('posts', PostViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', TemplateView.as_view(template_name='blog/index.html')),
     path('', include(router.urls)),
-] + static(base.STATIC_URL, document_root=base.STATIC_ROOT) + staticfiles_urlpatterns()
+] + static(base.STATIC_URL, document_root=base.STATIC_ROOT) + staticfiles_urlpatterns()\
+              + static(base.MEDIA_URL, document_root=base.MEDIA_ROOT)
