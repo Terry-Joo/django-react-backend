@@ -26,7 +26,8 @@ router = routers.DefaultRouter()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name='blog/index.html')),
-    path('', include(router.urls)),
+    # path('', TemplateView.as_view(template_name='blog/index.html')),
+    path('', TemplateView.as_view(template_name='blog/home.html')),
+    path('v1', include(router.urls)),
 ] + static(base.STATIC_URL, document_root=base.STATIC_ROOT) + staticfiles_urlpatterns()\
               + static(base.MEDIA_URL, document_root=base.MEDIA_ROOT)
