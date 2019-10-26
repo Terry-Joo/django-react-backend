@@ -14,7 +14,7 @@ SCOPE_CHOICES = (
 
 
 class AbstractBasePost(models.Model):
-    id = models.AutoField(auto_created=True, primary_key=True, editable=False)
+    id = models.CharField(max_length=255, primary_key=True)
     title = models.CharField(unique=False, null=False, blank=False, max_length=50, verbose_name='게시글 이름')
     content = RichTextUploadingField()
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='생성된 날짜')
@@ -28,10 +28,11 @@ class AbstractBasePost(models.Model):
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):
-        # if not self.pk:
-        #     TODO: set uuid
-        return super(AbstractBasePost, self).save(force_insert=force_insert, force_update=force_update, using=using,
-                                                  update_fields=update_fields)
+        if self.pk:
+            return super(AbstractBasePost, self).save(force_insert, force_update, using, update_fields)
+        else:
+            self.id = uuid.uuid4()
+            return super(AbstractBasePost, self).save(force_insert, force_update, using, update_fields)
 
 
 class AbstractPost(AbstractBasePost):
