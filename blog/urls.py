@@ -1,6 +1,9 @@
 from django.urls import path
 from django.views.generic import TemplateView
 
-url_patterns = [
-    path('', TemplateView.as_view(template_name='blog/hom.html'))
+from blog import views, apis
+
+urlpatterns = [
+    path('', views.home),
+    path('posts/<str:pk>/', apis.PostAPI.as_view())
 ]
