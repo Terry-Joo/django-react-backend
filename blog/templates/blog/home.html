@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wiki</title>
+</head>
+<body>
+{% if user.username %}
+    <h6>Hi! {{ user.username }}</h6>
+{% else %}
+    <h6><a href="http://127.0.0.1:8000/admin/login">Login</a></h6>
+{% endif %}
+<h1>Wiki</h1>
+    <nav>
+        <ul>
+        {% if user.is_superuser or user.is_staff %}
+            <li><a href="/admin">admin</a></li>
+        {% endif %}
+        {% for post in posts %}
+            <li><a href="/posts/{{ post.id }}">{{ post.title }}</a></li>
+        {% endfor %}
+        </ul>
+    </nav>
+</body>
+</html>

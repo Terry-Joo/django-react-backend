@@ -16,17 +16,18 @@ Including another URLconf
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.views.generic import TemplateView
 from rest_framework import routers
 
+import blog
 from backend.settings import base
 
 router = routers.DefaultRouter()
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name='blog/index.html')),
-    path('', include(router.urls)),
+    path('', include('blog.urls')),
+    path('v1', include(router.urls)),
 ] + static(base.STATIC_URL, document_root=base.STATIC_ROOT) + staticfiles_urlpatterns()\
               + static(base.MEDIA_URL, document_root=base.MEDIA_ROOT)
